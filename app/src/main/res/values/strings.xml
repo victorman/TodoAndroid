@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Todo</string>
+
+    <string name="action_filter">Filter</string>
+    <string name="action_unfilter">Un-Filter</string>
+    <string name="action_filter_settings">Filter Settings</string>
+    
+    
+    <!-- filter prefs /-->
+    <string name="pref_show_complete_title">Show Completed</string>
+    <string name="pref_show_complete_key">show_complete</string>
+    <string name="pref_show_complete_summary">Show Completed Todo Items</string>
+    <string name="pref_show_complete_default">true</string>
+    <string name="new_todo_item">New Todo Item</string>
+
+
+    <!-- hint strings /-->
+    <string name="hint_title">title</string>
+    <string name="hint_desc">description</string>
+
+</resources>
