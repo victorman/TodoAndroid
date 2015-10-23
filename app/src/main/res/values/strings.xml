@@ -10,12 +10,29 @@
     <string name="pref_show_complete_title">Show Completed</string>
     <string name="pref_show_complete_key">show_complete</string>
     <string name="pref_show_complete_summary">Show Completed Todo Items</string>
+    <string name="pref_show_complete_summary2">Do not Show Completed Todo Items</string>
     <string name="pref_show_complete_default">true</string>
     <string name="new_todo_item">New Todo Item</string>
 
+    <!-- dialog picker /-->
+    <string name="picker_positive">Set</string>
+    <string name="picker_negative">Cancel</string>
 
     <!-- hint strings /-->
-    <string name="hint_title">title</string>
-    <string name="hint_desc">description</string>
+    <string name="new_dialog_title_hint">title</string>
+    <string name="new_dialog_desc_hint">description</string>
+    <string name="title_activity_settings">Filter Settings</string>
+    <string name="pref_date_filter_select_dialog_title">Filter Date</string>
+    <string name="pref_date_filter_select_key">date_filter_picker</string>
+    <string name="pref_date_filter_select_title">Filter Date</string>
+    <string name="pref_date_filter_key">date_filter</string>
+    <string name="pref_date_filter_title">Filter by Date</string>
+    <string name="pref_date_filter_default">false</string>
+    <string name="delete_dialog_positive">OK</string>
+    <string name="delete_dialog_negative">Cancel</string>
+    <string name="delete_dialog_title">Delete this Item?</string>
+    <string name="new_dialog_title">New Todo Item:</string>
+    <string name="new_dialog_positive">OK</string>
+    <string name="new_dialog_negative">Cancel</string>
 
 </resources>

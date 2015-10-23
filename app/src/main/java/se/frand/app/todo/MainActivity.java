@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ public class MainActivity extends ListActivity {
 
     private TodoDbHelper dbHelper;
     private TodoListAdapter adapter;
+    public static final String ADAPTER_KEY = "adapter";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class MainActivity extends ListActivity {
         dbHelper = new TodoDbHelper(this);
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = TodoContract.getTodoItems(db);
+        Cursor cursor = TodoContract.getTodoItems(db, this);
         adapter = new TodoListAdapter(this, cursor, 0);
         setListAdapter(adapter);
 
@@ -48,6 +51,8 @@ public class MainActivity extends ListActivity {
                 return true;
             }
         });
+
+        db.close();
     }
 
 
@@ -60,17 +65,12 @@ public class MainActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_filter) {
-            // TODO requery the db and show cursor to the adapter
-            return true;
-        }else if (id == R.id.action_filter_settings) {
-            // TODO open the filter preferences
+        if (id == R.id.action_filter_settings) {
+            // open the filter preferences
+            Intent intent = new Intent(this, FilterSettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -83,17 +83,17 @@ public class MainActivity extends ListActivity {
 
         // show a dialog to get the title and description
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("New Todo Item:");
+        builder.setTitle(getString(R.string.new_dialog_title));
 
         LinearLayout ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
 
         final EditText title = new EditText(this);
-        title.setHint(R.string.hint_title);
+        title.setHint(R.string.new_dialog_title_hint);
         title.setInputType(InputType.TYPE_CLASS_TEXT);
 
         final EditText desc = new EditText(this);
-        desc.setHint(R.string.hint_desc);
+        desc.setHint(R.string.new_dialog_desc_hint);
         desc.setInputType(InputType.TYPE_CLASS_TEXT);
 
         ll.addView(title);
@@ -101,7 +101,7 @@ public class MainActivity extends ListActivity {
         builder.setView(ll);
 
         // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.new_dialog_positive), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -113,7 +113,7 @@ public class MainActivity extends ListActivity {
                 }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.new_dialog_negative), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -128,24 +128,20 @@ public class MainActivity extends ListActivity {
 
         // show a dialog to get the title and description
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete this Item?");
+        builder.setTitle(getString(R.string.delete_dialog_title));
 
         // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.delete_dialog_positive), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Context context = getApplicationContext();
-                SQLiteDatabase db = context.openOrCreateDatabase(
-                        TodoDbHelper.DATABASE_NAME,
-                        context.MODE_PRIVATE,
-                        null
-                );
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                 TodoContract.deleteTodoItem(db, id);
                 adapter.swapAdapterCursor(db);
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.delete_dialog_negative), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="date_filter_select_values">
+        <item>All Dates</item>
+        <item>After</item>
+        <item>On</item>
+        <item>Before</item>
+        <item>Between</item>
+    </string-array>
+    <string-array name="date_filter_select">
+        <item>all_dates</item>
+        <item>after</item>
+        <item>on</item>
+        <item>before</item>
+        <item>between</item>
+    </string-array>
+    <string-array name="empty_array" />
+</resources>
